@@ -2,7 +2,6 @@ package com.service.shopeasy.ui.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import androidx.lifecycle.viewmodel.compose.viewModel
 import com.service.shopeasy.data.repository.UserRepository
 import com.service.shopeasy.domain.model.User
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -30,12 +29,12 @@ class UsersViewModel @Inject constructor(private val userRepository: UserReposit
     fun onUserIntent(intent: UsersIntent) {
         when (intent) {
             is UsersIntent.LoadUsers -> {loadUsers()}
-            is UsersIntent.Refresh -> {loadUsers(true)}
+            is UsersIntent.Refresh -> {loadUsers()}
 
         }
     }
 
-    fun loadUsers(isRefresh: Boolean = false) = viewModelScope.launch {
+    fun loadUsers() = viewModelScope.launch {
         _state.value = _state.value.copy(loading = true, error = null)
         try {
             _state.value = _state.value.copy(loading = false, users = userRepository.getUsers())

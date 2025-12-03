@@ -9,21 +9,29 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.service.shopeasy.ui.components.BottomBar
 import com.service.shopeasy.ui.components.TopBar
+import com.service.shopeasy.ui.screens.ProductListScreen
 import com.service.shopeasy.ui.screens.UserListScreen
+import com.service.shopeasy.ui.viewmodel.ProductsViewModel
 import com.service.shopeasy.ui.viewmodel.UsersViewModel
 
 @Composable
 fun AppNavHost(navController: NavHostController = rememberNavController()){
 
     Scaffold(
-        topBar = {TopBar(navController)}
+        topBar = {TopBar(navController)},
+        bottomBar = { BottomBar(navController) }
     ) { inner ->
-        NavHost(navController = navController, startDestination = Screen.User.route,
+        NavHost(navController = navController, startDestination = Screen.Product.route,
             modifier = Modifier.padding(inner)){
             composable(Screen.User.route){
                 val userViewModel: UsersViewModel = hiltViewModel()
                 UserListScreen(userViewModel)
+            }
+            composable(Screen.Product.route){
+                val productViewModel: ProductsViewModel = hiltViewModel()
+                ProductListScreen(productViewModel) { }
             }
         }
     }

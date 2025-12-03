@@ -34,10 +34,11 @@ class UsersViewModel @Inject constructor(private val userRepository: UserReposit
         }
     }
 
-    fun loadUsers() = viewModelScope.launch {
+    private fun loadUsers() = viewModelScope.launch {
         _state.value = _state.value.copy(loading = true, error = null)
         try {
-            _state.value = _state.value.copy(loading = false, users = userRepository.getUsers())
+            _state.value = _state.value.
+            copy(loading = false, users = userRepository.getUsers())
         } catch (t: Throwable) {
             _state.value = _state.value.copy(loading = false, error = t.message ?: "Unknown error")
         }

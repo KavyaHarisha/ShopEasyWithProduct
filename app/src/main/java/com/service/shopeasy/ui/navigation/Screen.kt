@@ -1,5 +1,6 @@
 package com.service.shopeasy.ui.navigation
 
 sealed class Screen(val route: String) {
-    object User: Screen("User")
+    object User: Screen("Users")
+    object Product: Screen("Products")
 }

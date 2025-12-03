@@ -1,6 +1,7 @@
 package com.service.shopeasy.di
 
 import com.service.shopeasy.data.api.ShopEasyApiService
+import com.service.shopeasy.data.repository.ProductRepository
 import com.service.shopeasy.data.repository.UserRepository
 import com.service.shopeasy.data.repository.impl.NetworkRepositoryImpl
 import com.squareup.moshi.Moshi
@@ -61,6 +62,10 @@ object NetworkModule {
     @Singleton
     @Provides
     fun provideUserRepository(impl: NetworkRepositoryImpl): UserRepository = impl
+
+    @Provides
+    @Singleton
+    fun provideProductRepository(impl: NetworkRepositoryImpl): ProductRepository = impl
 
 
 }

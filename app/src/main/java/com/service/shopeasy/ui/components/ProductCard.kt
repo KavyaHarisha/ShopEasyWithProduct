@@ -25,8 +25,8 @@ import coil3.compose.rememberAsyncImagePainter
 import com.service.shopeasy.domain.model.Product
 
 @Composable
-fun ProductCard(product: Product, onClick: () -> Unit, onFavorite: () -> Unit,modifier: Modifier = Modifier){
-    Card(modifier = modifier.fillMaxWidth().padding(8.dp).clickable(onClick = onClick),
+fun ProductCard(product: Product, onClick:(Int) -> Unit, onFavorite: () -> Unit, modifier: Modifier = Modifier){
+    Card(modifier = modifier.fillMaxWidth().padding(8.dp).clickable { onClick(product.id) },
         elevation = CardDefaults.cardElevation(defaultElevation = 6.dp),
         shape = RoundedCornerShape(6.dp)) {
         Row(Modifier.padding(12.dp), verticalAlignment = Alignment.CenterVertically) {

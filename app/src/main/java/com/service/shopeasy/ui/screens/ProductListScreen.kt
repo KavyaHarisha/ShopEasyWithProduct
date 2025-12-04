@@ -12,7 +12,7 @@ import com.service.shopeasy.ui.viewmodel.ProductIntent
 import com.service.shopeasy.ui.viewmodel.ProductsViewModel
 
 @Composable
-fun ProductListScreen(viewModel: ProductsViewModel = hiltViewModel(), onProductClick: () -> Unit){
+fun ProductListScreen(viewModel: ProductsViewModel = hiltViewModel(), onProductClick: (Int) -> Unit){
 
     val productsState by viewModel.productListState.collectAsState()
 
@@ -31,7 +31,7 @@ fun ProductListScreen(viewModel: ProductsViewModel = hiltViewModel(), onProductC
                     items = productsState.products,
                     key = {product -> product.id}
                 ){product ->
-                    ProductCard(product = product, onClick = onProductClick, onFavorite = {})
+                    ProductCard(product = product, onClick = { onProductClick(product.id) }, onFavorite = {})
                 }
             }
         }

@@ -6,13 +6,17 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.navigation.NavHostController
+import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import androidx.navigation.navArgument
 import com.service.shopeasy.ui.components.BottomBar
 import com.service.shopeasy.ui.components.TopBar
+import com.service.shopeasy.ui.screens.ProductDetailsScreen
 import com.service.shopeasy.ui.screens.ProductListScreen
 import com.service.shopeasy.ui.screens.UserListScreen
+import com.service.shopeasy.ui.viewmodel.ProductViewDetailsViewModel
 import com.service.shopeasy.ui.viewmodel.ProductsViewModel
 import com.service.shopeasy.ui.viewmodel.UsersViewModel
 
@@ -31,7 +35,18 @@ fun AppNavHost(navController: NavHostController = rememberNavController()){
             }
             composable(Screen.Product.route){
                 val productViewModel: ProductsViewModel = hiltViewModel()
-                ProductListScreen(productViewModel) { }
+                ProductListScreen(productViewModel) { id ->
+                    navController.navigate(Screen.ProductDetails.createRoute(id))
+                }
+            }
+            composable(Screen.ProductDetails.route, arguments = listOf(navArgument("productId"){
+                type = NavType.IntType
+            })){
+                val id = requireNotNull(it.arguments?.getInt("productId"))
+                val productDetailsViewModel: ProductViewDetailsViewModel = hiltViewModel()
+                ProductDetailsScreen(productDetailsViewModel,id) {
+
+                }
             }
         }
     }

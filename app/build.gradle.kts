@@ -4,7 +4,6 @@ plugins {
     alias(libs.plugins.kotlin.compose)
     alias(libs.plugins.kotlinAndroidKsp)
     alias(libs.plugins.hiltAndroid)
-    alias(libs.plugins.kotlinKapt)
 }
 
 android {
@@ -79,5 +78,10 @@ dependencies {
 
     implementation(libs.coil3.compose)
     implementation(libs.coil3.network.okhttp)
+
+    //Room
+    implementation(libs.androidx.room.runtime)
+    implementation(libs.androidx.room.ktx)
+    ksp(libs.androidx.room.compiler)
 
 }

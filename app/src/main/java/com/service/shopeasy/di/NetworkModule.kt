@@ -1,6 +1,11 @@
 package com.service.shopeasy.di
 
+import androidx.room.Room
+import android.content.Context
 import com.service.shopeasy.data.api.ShopEasyApiService
+import com.service.shopeasy.data.local.ShopEasyDatabase
+import com.service.shopeasy.data.local.dao.FavoriteDao
+import com.service.shopeasy.data.repository.FavoritesRepository
 import com.service.shopeasy.data.repository.ProductRepository
 import com.service.shopeasy.data.repository.UserRepository
 import com.service.shopeasy.data.repository.impl.NetworkRepositoryImpl
@@ -8,6 +13,7 @@ import com.squareup.moshi.Moshi
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
+import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
@@ -67,5 +73,21 @@ object NetworkModule {
     @Singleton
     fun provideProductRepository(impl: NetworkRepositoryImpl): ProductRepository = impl
 
+
+    @Provides @Singleton
+    fun provideDatabase(@ApplicationContext ctx: Context): ShopEasyDatabase =
+        Room.databaseBuilder(ctx, ShopEasyDatabase::class.java, "shopeasy_db").fallbackToDestructiveMigration(true).build()
+
+    @Singleton
+    @Provides
+    fun provideFavoriteDao(database: ShopEasyDatabase): FavoriteDao {
+        return database.favoriteDao()
+    }
+
+    @Singleton
+    @Provides
+    fun provideFavoritesRepository(favoriteDao: FavoriteDao): FavoritesRepository {
+        return FavoritesRepository(favoriteDao)
+    }
 
 }

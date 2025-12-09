@@ -13,9 +13,11 @@ import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import com.service.shopeasy.ui.components.BottomBar
 import com.service.shopeasy.ui.components.TopBar
+import com.service.shopeasy.ui.screens.FavoritesScreen
 import com.service.shopeasy.ui.screens.ProductDetailsScreen
 import com.service.shopeasy.ui.screens.ProductListScreen
 import com.service.shopeasy.ui.screens.UserListScreen
+import com.service.shopeasy.ui.viewmodel.FavoritesViewModel
 import com.service.shopeasy.ui.viewmodel.ProductViewDetailsViewModel
 import com.service.shopeasy.ui.viewmodel.ProductsViewModel
 import com.service.shopeasy.ui.viewmodel.UsersViewModel
@@ -46,6 +48,13 @@ fun AppNavHost(navController: NavHostController = rememberNavController()){
                 val productDetailsViewModel: ProductViewDetailsViewModel = hiltViewModel()
                 ProductDetailsScreen(productDetailsViewModel,id) {
 
+                }
+            }
+
+            composable(Screen.Favorite.route){
+                val favoriteViewModel: FavoritesViewModel = hiltViewModel()
+                FavoritesScreen(favoriteViewModel) { productId ->
+                    navController.navigate(Screen.ProductDetails.createRoute(productId))
                 }
             }
         }

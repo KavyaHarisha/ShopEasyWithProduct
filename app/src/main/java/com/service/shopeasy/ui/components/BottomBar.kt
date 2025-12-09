@@ -1,6 +1,7 @@
 package com.service.shopeasy.ui.components
 
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.filled.Store
 import androidx.compose.material3.Icon
 import androidx.compose.material3.NavigationBar
@@ -22,7 +23,8 @@ data class BottomNavItem (
 @Composable
 fun BottomBar(navController: NavController){
     val navItems = listOf(
-        BottomNavItem(label = Screen.Product.route, Icons.Default.Store, Screen.Product.route)
+        BottomNavItem(label = Screen.Product.route, Icons.Default.Store, Screen.Product.route),
+        BottomNavItem(label = Screen.Favorite.route, Icons.Default.Favorite, Screen.Favorite.route)
     )
 
     NavigationBar {

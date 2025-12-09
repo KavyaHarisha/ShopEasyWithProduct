@@ -41,7 +41,7 @@ fun ProductCard(product: Product, onClick:(Int) -> Unit, onFavorite: () -> Unit,
                 Text(text = "$${product.price}")
             }
 
-            IconButton(onClick = { onFavorite }){
+            IconButton(onClick = onFavorite ){
                 Icon(Icons.Default.Favorite, contentDescription = "favorite")
             }
         }

@@ -53,6 +53,7 @@ dependencies {
     implementation(libs.androidx.compose.ui.tooling.preview)
     implementation(libs.androidx.compose.material3)
     testImplementation(libs.junit)
+    testImplementation(libs.junit.jupiter)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
     androidTestImplementation(platform(libs.androidx.compose.bom))
@@ -83,5 +84,18 @@ dependencies {
     implementation(libs.androidx.room.runtime)
     implementation(libs.androidx.room.ktx)
     ksp(libs.androidx.room.compiler)
+
+    // Coroutines test
+    testImplementation(libs.kotlinx.coroutines.test)
+    // MockK
+    testImplementation(libs.mockk)
+    // Turbine (test Flow)
+    testImplementation(libs.turbine)
+    // Truth (optional assertions)
+    testImplementation(libs.truth)
+
+    // Hilt testing
+    androidTestImplementation (libs.hilt.android.testing)
+    kspAndroidTest (libs.hilt.compiler)
 
 }

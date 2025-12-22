@@ -8,8 +8,8 @@ import com.service.shopeasy.data.local.entity.FavoriteEntity
 
 fun UserDto.toDomain(): User = User(
     id = id,
-    name = "${name.firstname} ${name.lastname}",
-    email = email
+    name = name?.let { name -> "${name.firstname} ${name.lastname}" } ?: "",
+    email = email ?: ""
 )
 
 fun ProductDto.toDomain(): Product = Product(

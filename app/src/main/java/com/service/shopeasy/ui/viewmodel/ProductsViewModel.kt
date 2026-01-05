@@ -11,6 +11,7 @@ import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -49,12 +50,25 @@ class ProductsViewModel @Inject constructor(private val productRepository: Produ
 
     private fun loadProducts() =
         viewModelScope.launch {
-            _productListState.value = _productListState.value.copy(loading = true, error = null)
+            /*
+            * https://www.linkedin.com/feed/update/urn:li:activity:7413559045883592704?updateEntityUrn=urn%3Ali%3Afs_updateV2%3A%28urn%3Ali%3Aactivity%3A7413559045883592704%2CFEED_DETAIL%2CEMPTY%2CDEFAULT%2Cfalse%29
+            * Use .update instead of .copy for state flow object for Thread Safety,Consistency, and No Lost Data
+            * */
+            _productListState.update { currentState ->
+                currentState.copy(loading = true, error = null)
+            }
             try {
                 val productsResult = productRepository.getProducts()
-                _productListState.value = _productListState.value.copy(loading = false,products = productsResult)
+                _productListState.update { currentState ->
+                    currentState.copy(loading = false, products = productsResult)
+                }
             }catch (e: Exception){
-                _productListState.value= _productListState.value.copy(loading = false, error = e.localizedMessage ?: "Unknown error")
+                _productListState.update { currentState ->
+                    currentState.copy(
+                        loading = false,
+                        error = e.localizedMessage ?: "Unknown error"
+                    )
+                }
             }
         }
 

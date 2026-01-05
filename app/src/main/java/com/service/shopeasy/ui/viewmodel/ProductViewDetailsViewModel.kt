@@ -11,6 +11,7 @@ import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -48,12 +49,17 @@ class ProductViewDetailsViewModel @Inject constructor(private val productReposit
     }
 
     private fun loadDetails(productId: Int) = viewModelScope.launch{
-        _productDetailsState.value = _productDetailsState.value.copy(loading = true,error = null)
+        _productDetailsState.update { currentState ->
+            currentState.copy(loading = true, error = null)
+        }
         try {
-            _productDetailsState.value = _productDetailsState.value.copy(
-                loading = false, productDetails = productRepository.getProduct(productId))
+            _productDetailsState.update { currentState ->
+                currentState.copy(loading = false, productDetails = productRepository.getProduct(productId))
+            }
         }catch (e: Exception){
-            _productDetailsState.value = _productDetailsState.value.copy(loading = false, error = e.localizedMessage ?: "Unknown error")
+            _productDetailsState.update { currentState ->
+                currentState.copy(loading = false, error = e.localizedMessage ?: "Unknown error")
+            }
         }
     }
 

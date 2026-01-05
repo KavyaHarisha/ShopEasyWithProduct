@@ -7,6 +7,7 @@ import com.service.shopeasy.domain.model.User
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -35,12 +36,17 @@ class UsersViewModel @Inject constructor(private val userRepository: UserReposit
     }
 
     private fun loadUsers() = viewModelScope.launch {
-        _state.value = _state.value.copy(loading = true, error = null)
+        _state.update { currentState ->
+            currentState.copy(loading = true, error = null)
+        }
         try {
-            _state.value = _state.value.
-            copy(loading = false, users = userRepository.getUsers())
+            _state.update { currentState ->
+                currentState.copy(loading = false, users = userRepository.getUsers())
+            }
         } catch (t: Throwable) {
-            _state.value = _state.value.copy(loading = false, error = t.message ?: "Unknown error")
+            _state.update { currentState ->
+                currentState.copy(loading = false, error = t.message ?: "Unknown error")
+            }
         }
     }
 

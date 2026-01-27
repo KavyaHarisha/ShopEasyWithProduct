@@ -13,6 +13,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.service.shopeasy.ui.components.UserItem
 import com.service.shopeasy.ui.viewmodel.UsersIntent
 import com.service.shopeasy.ui.viewmodel.UsersViewModel
@@ -20,7 +21,11 @@ import com.service.shopeasy.ui.viewmodel.UsersViewModel
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun UserListScreen(usersListViewModel: UsersViewModel = hiltViewModel()){
-    val state by usersListViewModel.state.collectAsState()
+    /*
+    * For better performance.
+    * https://www.linkedin.com/posts/ibrahim-asgari_performanceoptimization-jetpackcompose-androiddevelopment-share-7421845377026494464-d229?utm_source=share&utm_medium=member_desktop&rcm=ACoAAA0h4zkBHeoH2TunSUAjl_H-BJ9b0AhLYeI
+    * */
+    val state by usersListViewModel.state.collectAsStateWithLifecycle()
 
     /*
     * based on the this post link information thought to change add LazyLayoutCacheWindow to improve performance

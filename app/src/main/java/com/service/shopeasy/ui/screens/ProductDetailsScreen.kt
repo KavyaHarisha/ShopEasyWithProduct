@@ -18,6 +18,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import coil3.compose.rememberAsyncImagePainter
 import com.service.shopeasy.domain.model.Product
 import com.service.shopeasy.ui.viewmodel.ProductDetailsEffect
@@ -31,7 +32,11 @@ fun ProductDetailsScreen(
     productId: Int,
     onAddFavorite: (product: Product) -> Unit
 ) {
-    val productDetailsState by detailsViewModel.productDetailsState.collectAsState()
+    /*
+    * For better performance.
+    * https://www.linkedin.com/posts/ibrahim-asgari_performanceoptimization-jetpackcompose-androiddevelopment-share-7421845377026494464-d229?utm_source=share&utm_medium=member_desktop&rcm=ACoAAA0h4zkBHeoH2TunSUAjl_H-BJ9b0AhLYeI
+    * */
+    val productDetailsState by detailsViewModel.productDetailsState.collectAsStateWithLifecycle()
     val context = LocalContext.current
 
 

@@ -58,6 +58,7 @@ dependencies {
     androidTestImplementation(libs.androidx.espresso.core)
     androidTestImplementation(platform(libs.androidx.compose.bom))
     androidTestImplementation(libs.androidx.compose.ui.test.junit4)
+    androidTestImplementation(libs.androidx.core.testing)
     debugImplementation(libs.androidx.compose.ui.tooling)
     debugImplementation(libs.androidx.compose.ui.test.manifest)
 
@@ -98,4 +99,13 @@ dependencies {
     androidTestImplementation (libs.hilt.android.testing)
     kspAndroidTest (libs.hilt.compiler)
 
+    // Required for Room testing
+    androidTestImplementation(libs.androidx.room.testing)
+
+    // Required for Flow/Coroutine testing
+    androidTestImplementation(libs.kotlinx.coroutines.test)
+    androidTestImplementation(libs.turbine)
+
+    // Required for Assertions
+    androidTestImplementation(libs.truth)
 }
